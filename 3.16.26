@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0054)file:///C:/Users/Derrius/Downloads/sword_battle_5.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SWORD TOKEN — Battle Arena</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<title>SWORD — Battle Arena</title>
+<link href="./SWORD — Battle Arena_files/css2" rel="stylesheet">
 <style>
   :root {
     --gold: #c9a84c;
@@ -20,633 +20,222 @@
     --text-muted: #7070a0;
     --text-body: #c8c8e0;
     --success: #3ecf6e;
-    --parchment: #e8d9b0;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
   body {
-    background: var(--dark0);
-    color: var(--text-body);
+    background: var(--dark0); color: var(--text-body);
     font-family: 'IM Fell English', Georgia, serif;
-    min-height: 100vh;
-    overflow-x: hidden;
+    min-height: 100vh; display: flex; align-items: center;
+    justify-content: center; overflow-x: hidden;
   }
+  #stars { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+  .star { position:absolute; background:#fff; border-radius:50%; animation: twinkle var(--d,3s) infinite alternate; }
+  @keyframes twinkle { from{opacity:0.1} to{opacity:0.9} }
 
-  /* === STARFIELD === */
-  #stars {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    pointer-events: none; z-index: 0; overflow: hidden;
+  .card {
+    position:relative; z-index:1; width:100%; max-width:500px;
+    margin:2rem 1.25rem; background:var(--dark1);
+    border:1px solid var(--gold-dark); border-radius:8px;
+    padding:2.5rem 2rem; text-align:center;
   }
-  .star {
-    position: absolute; background: #fff; border-radius: 50%;
-    animation: twinkle var(--d, 3s) infinite alternate;
-  }
-  @keyframes twinkle { from { opacity: 0.1; } to { opacity: 0.9; } }
+  .eyebrow { font-family:'Cinzel',serif; font-size:10px; letter-spacing:0.35em; color:var(--text-muted); text-transform:uppercase; margin-bottom:0.6rem; }
+  .site-title { font-family:'Cinzel Decorative',serif; font-size:clamp(2.4rem,8vw,3.6rem); font-weight:900; color:var(--gold-light); text-shadow:0 0 50px rgba(201,168,76,0.35),0 2px 0 var(--gold-dark); line-height:1.1; margin-bottom:0.4rem; }
+  .site-sub { font-family:'Cinzel',serif; font-size:0.72rem; letter-spacing:0.15em; color:var(--text-muted); margin-bottom:1.75rem; }
+  .divider { display:flex; align-items:center; gap:0.75rem; margin:1.5rem 0; }
+  .divider-line { flex:1; height:1px; background:linear-gradient(90deg,transparent,var(--gold-dark),transparent); }
+  .divider-diamond { width:8px; height:8px; background:var(--gold); transform:rotate(45deg); flex-shrink:0; }
 
-  /* === LAYOUT === */
-  .wrap { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+  /* Pre-connect */
+  .metamask-icon { width:72px; height:72px; margin:0 auto 1.25rem; display:block; }
+  .connect-hint { font-size:0.88rem; color:var(--text-muted); margin-bottom:1.75rem; line-height:1.7; font-style:italic; }
+  .connect-btn-main {
+    display:flex; align-items:center; justify-content:center; gap:0.65rem;
+    width:100%; padding:1rem 1.5rem; cursor:pointer;
+    font-family:'Cinzel',serif; font-size:0.9rem; font-weight:600;
+    letter-spacing:0.1em; text-transform:uppercase;
+    background:linear-gradient(180deg,#e8820a 0%,#9a4d00 100%);
+    color:#fff; border:1px solid #f09030; border-radius:5px;
+    transition:all 0.2s; text-shadow:0 1px 0 rgba(0,0,0,0.4);
+  }
+  .connect-btn-main:hover:not(:disabled) { background:linear-gradient(180deg,#f09020 0%,#c06000 100%); transform:translateY(-1px); box-shadow:0 4px 20px rgba(230,120,10,0.35); }
+  .connect-btn-main:disabled { opacity:0.5; cursor:not-allowed; }
+  .no-metamask { display:none; margin-top:1.25rem; font-family:'Cinzel',serif; font-size:0.75rem; letter-spacing:0.08em; color:var(--blood-bright); line-height:1.7; }
+  .no-metamask a { color:var(--gold); }
 
-  /* === HEADER === */
-  .site-header { text-align: center; padding: 3rem 0 2rem; }
-  .site-header .eyebrow {
-    font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.3em;
-    color: var(--gold); text-transform: uppercase; margin-bottom: 0.75rem;
-  }
-  .site-title {
-    font-family: 'Cinzel Decorative', serif; font-size: clamp(2.2rem, 6vw, 4rem);
-    font-weight: 900; color: var(--gold-light);
-    text-shadow: 0 0 60px rgba(201,168,76,0.4), 0 2px 0 var(--gold-dark);
-    line-height: 1.1; margin-bottom: 0.5rem;
-  }
-  .site-sub {
-    font-family: 'Cinzel', serif; font-size: 0.85rem; letter-spacing: 0.15em;
-    color: var(--text-muted); margin-bottom: 2rem;
-  }
-  .divider {
-    display: flex; align-items: center; gap: 1rem; margin: 1.5rem 0;
-  }
-  .divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dark), transparent); }
-  .divider-diamond {
-    width: 10px; height: 10px; background: var(--gold);
-    transform: rotate(45deg); flex-shrink: 0;
-  }
+  /* Arena */
+  #arena { display:none; }
+  .wallet-pill { display:inline-flex; align-items:center; gap:0.5rem; background:var(--dark3); border:1px solid var(--gold-dark); border-radius:20px; padding:0.35rem 0.9rem; font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.08em; color:var(--success); margin-bottom:1.25rem; }
+  .wallet-dot-sm { width:7px; height:7px; border-radius:50%; background:var(--success); box-shadow:0 0 5px var(--success); }
+  .sword-bal { font-family:'Cinzel Decorative',serif; font-size:1.6rem; color:var(--gold-light); font-weight:700; margin-bottom:0.2rem; }
+  .sword-bal-label { font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em; color:var(--text-muted); text-transform:uppercase; margin-bottom:1.5rem; }
 
-  /* === TOKEN INFO CARDS === */
-  .token-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 1rem; margin: 2rem 0;
-  }
-  .token-card {
-    background: var(--dark2); border: 1px solid var(--gold-dark);
-    border-radius: 4px; padding: 1.25rem 1rem; text-align: center;
-  }
-  .token-card .tc-label {
-    font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.2em;
-    color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.5rem;
-  }
-  .token-card .tc-value {
-    font-family: 'Cinzel Decorative', serif; font-size: 1.1rem;
-    color: var(--gold-light); font-weight: 700; word-break: break-all;
-  }
-  .token-card .tc-value.small { font-size: 0.65rem; }
+  .fighters { display:grid; grid-template-columns:1fr 50px 1fr; align-items:center; gap:0.5rem; margin:1.25rem 0; }
+  .fighter { text-align:center; }
+  .fighter-sprite { font-size:3rem; display:block; margin:0 auto 0.4rem; filter:drop-shadow(0 0 6px rgba(201,168,76,0.25)); }
+  .fighter-name { font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.12em; color:var(--gold); text-transform:uppercase; }
+  .fighter-sub { font-family:'Cinzel',serif; font-size:0.6rem; color:var(--text-muted); margin-top:3px; }
+  .hp-bar { height:5px; background:var(--dark4); border-radius:3px; margin-top:5px; overflow:hidden; }
+  .hp-fill { height:100%; border-radius:3px; background:var(--success); transition:width 0.6s ease,background 0.3s; }
+  .hp-fill.low { background:var(--blood-bright); }
+  .vs-text { font-family:'Cinzel Decorative',serif; font-size:1.2rem; font-weight:900; color:var(--blood-bright); text-shadow:0 0 16px var(--blood); }
+  .hoard-label { font-family:'Cinzel',serif; font-size:8px; letter-spacing:0.15em; color:var(--text-muted); text-transform:uppercase; margin-top:6px; }
+  .hoard-count { font-family:'Cinzel Decorative',serif; font-size:0.85rem; font-weight:700; color:var(--blood-bright); margin-top:2px; }
+  .hoard-count.pulse { animation:hoard-pulse 0.5s ease; }
+  @keyframes hoard-pulse { 0%{transform:scale(1)} 40%{transform:scale(1.35)} 100%{transform:scale(1)} }
 
-  /* === SECTION TITLES === */
-  .section-title {
-    font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 600;
-    color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase;
-    margin: 2.5rem 0 1rem;
-  }
+  .input-row { display:flex; align-items:center; gap:0.75rem; margin:1.25rem 0; }
+  .sword-input { flex:1; background:var(--dark3); border:1px solid var(--gold-dark); border-radius:4px; color:var(--gold-light); font-family:'Cinzel Decorative',serif; font-size:1.1rem; padding:0.65rem 0.75rem; text-align:center; outline:none; }
+  .sword-input:focus { border-color:var(--gold); }
+  .chance-badge { font-family:'Cinzel',serif; font-size:0.68rem; letter-spacing:0.04em; padding:0.35rem 0.7rem; border-radius:3px; font-weight:600; white-space:nowrap; }
+  .chance-badge.bad  { background:rgba(139,26,26,0.3); color:#ff7070; border:1px solid var(--blood); }
+  .chance-badge.good { background:rgba(62,207,110,0.15); color:var(--success); border:1px solid #2a8a4a; }
 
-  /* === BATTLE ARENA === */
-  .arena {
-    background: var(--dark1); border: 1px solid var(--gold-dark);
-    border-radius: 6px; padding: 2rem; margin: 1.5rem 0;
-    position: relative; overflow: hidden;
-  }
-  .arena::before {
-    content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse at center bottom, rgba(139,26,26,0.12) 0%, transparent 70%);
-    pointer-events: none;
-  }
+  .fight-btn { display:block; width:100%; padding:1rem; font-family:'Cinzel Decorative',serif; font-size:1.05rem; font-weight:700; letter-spacing:0.12em; cursor:pointer; background:linear-gradient(180deg,#9a2020 0%,#5a0e0e 100%); color:var(--gold-light); border:1px solid #c03030; border-radius:4px; transition:all 0.2s; text-shadow:0 1px 0 rgba(0,0,0,0.5); }
+  .fight-btn:hover:not(:disabled) { background:linear-gradient(180deg,#c02828 0%,#780f0f 100%); transform:translateY(-1px); box-shadow:0 4px 20px rgba(139,26,26,0.4); }
+  .fight-btn:disabled { opacity:0.5; cursor:not-allowed; }
 
-  /* Fighter row */
-  .fighters {
-    display: grid; grid-template-columns: 1fr 80px 1fr;
-    align-items: center; gap: 1rem; margin-bottom: 2rem;
-  }
-  .fighter { text-align: center; }
-  .fighter-sprite {
-    font-size: 3.5rem; display: block; margin: 0 auto 0.5rem;
-    transition: transform 0.3s, filter 0.3s;
-    filter: drop-shadow(0 0 8px rgba(201,168,76,0.3));
-  }
-  .fighter-name {
-    font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.12em;
-    color: var(--gold); text-transform: uppercase;
-  }
-  .fighter-hp {
-    font-family: 'Cinzel', serif; font-size: 0.7rem; color: var(--text-muted);
-    margin-top: 4px;
-  }
-  .hp-bar {
-    height: 6px; background: var(--dark4); border-radius: 3px;
-    margin-top: 6px; overflow: hidden;
-  }
-  .hp-fill {
-    height: 100%; border-radius: 3px;
-    background: var(--success); transition: width 0.6s ease, background 0.3s;
-  }
-  .hp-fill.low { background: var(--blood-bright); }
-  .vs-text {
-    font-family: 'Cinzel Decorative', serif; font-size: 1.4rem;
-    font-weight: 900; color: var(--blood-bright); text-align: center;
-    text-shadow: 0 0 20px var(--blood);
-  }
+  .log-wrap { margin-top:1.25rem; text-align:left; }
+  .log-title { font-family:'Cinzel',serif; font-size:0.68rem; letter-spacing:0.15em; color:var(--text-muted); text-transform:uppercase; margin-bottom:0.5rem; }
+  .battle-log { background:var(--dark0); border:1px solid var(--dark4); border-radius:4px; padding:0.75rem; min-height:130px; max-height:180px; overflow-y:auto; font-size:0.82rem; line-height:1.75; }
+  .battle-log::-webkit-scrollbar { width:3px; }
+  .battle-log::-webkit-scrollbar-thumb { background:var(--gold-dark); border-radius:2px; }
+  .log-line { margin:0; padding:1px 0; }
+  .log-line.sys  { color:var(--text-muted); font-style:italic; font-size:0.74rem; }
+  .log-line.atk  { color:#ff9a9a; }
+  .log-line.def  { color:#9ad4ff; }
+  .log-line.win  { color:var(--success); font-weight:700; font-family:'Cinzel',serif; }
+  .log-line.lose { color:var(--blood-bright); font-weight:700; font-family:'Cinzel',serif; }
+  .log-line.gold { color:var(--gold-light); font-family:'Cinzel',serif; }
+  .tx-link { display:inline-block; margin-top:3px; font-family:'Cinzel',serif; font-size:0.7rem; color:var(--gold); text-decoration:underline; }
 
-  /* Controls */
-  .battle-controls {
-    display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem;
-  }
-  .control-row { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
-  .control-label {
-    font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.1em;
-    color: var(--text-muted); text-transform: uppercase; min-width: 130px;
-  }
-  .sword-input {
-    background: var(--dark3); border: 1px solid var(--gold-dark); border-radius: 3px;
-    color: var(--gold-light); font-family: 'Cinzel Decorative', serif; font-size: 1rem;
-    padding: 0.4rem 0.75rem; width: 120px; text-align: center;
-    outline: none;
-  }
-  .sword-input:focus { border-color: var(--gold); }
-  .chance-badge {
-    font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.05em;
-    padding: 0.3rem 0.75rem; border-radius: 3px; font-weight: 600;
-  }
-  .chance-badge.bad { background: rgba(139,26,26,0.3); color: #ff7070; border: 1px solid var(--blood); }
-  .chance-badge.good { background: rgba(62,207,110,0.15); color: var(--success); border: 1px solid #2a8a4a; }
+  .result-banner { display:none; text-align:center; padding:1.25rem; border-radius:4px; margin-top:1rem; animation:fadeIn 0.5s ease; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
+  .result-banner.victory { display:block; background:rgba(62,207,110,0.1); border:1px solid #2a8a4a; color:var(--success); }
+  .result-banner.defeat  { display:block; background:rgba(139,26,26,0.15); border:1px solid var(--blood); color:#ff8080; }
+  .result-title { font-family:'Cinzel Decorative',serif; font-size:1.3rem; font-weight:900; margin-bottom:0.4rem; }
+  .result-sub   { font-size:0.82rem; opacity:0.85; font-style:italic; }
 
-  /* Wallet bar */
-  .wallet-bar {
-    display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
-    margin-bottom: 1.5rem; padding: 0.85rem 1rem;
-    background: var(--dark3); border: 1px solid var(--gold-dark); border-radius: 4px;
-  }
-  .wallet-dot {
-    width: 8px; height: 8px; border-radius: 50%; background: var(--text-muted); flex-shrink: 0;
-    transition: background 0.3s;
-  }
-  .wallet-dot.connected { background: var(--success); box-shadow: 0 0 6px var(--success); }
-  .wallet-dot.error     { background: var(--blood-bright); }
-  .wallet-status {
-    font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 0.08em;
-    color: var(--text-muted); flex: 1; min-width: 0; overflow: hidden;
-    text-overflow: ellipsis; white-space: nowrap;
-  }
-  .wallet-status.connected { color: var(--success); }
-  .wallet-status.error     { color: #ff7070; }
-  .connect-btn {
-    font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 0.08em;
-    padding: 0.35rem 0.9rem; cursor: pointer;
-    background: transparent; border: 1px solid var(--gold-dark); border-radius: 3px;
-    color: var(--gold); transition: all 0.2s; white-space: nowrap;
-  }
-  .connect-btn:hover { background: rgba(201,168,76,0.1); border-color: var(--gold); }
-  .connect-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-  .sword-balance {
-    font-family: 'Cinzel Decorative', serif; font-size: 0.7rem;
-    color: var(--gold-light); white-space: nowrap;
-  }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-7px)} 40%{transform:translateX(7px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)} }
+  .shaking { animation:shake 0.4s ease; }
+  @keyframes glow-gold { 0%,100%{filter:drop-shadow(0 0 6px rgba(201,168,76,0.2))} 50%{filter:drop-shadow(0 0 20px rgba(201,168,76,0.8))} }
+  .glowing { animation:glow-gold 0.6s ease; }
 
-  /* Tx link */
-  .tx-link {
-    display: inline-block; margin-top: 0.5rem;
-    font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 0.06em;
-    color: var(--gold); text-decoration: underline; cursor: pointer;
-  }
+  .disconnect { display:block; margin-top:1.25rem; font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.1em; color:var(--text-muted); cursor:pointer; text-decoration:underline; }
+  .disconnect:hover { color:var(--blood-bright); }
+  .footer { margin-top:1.75rem; font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.1em; color:var(--dark4); line-height:1.9; }
 
-  /* Fight button */
-  .fight-btn {
-    display: block; width: 100%; padding: 1rem;
-    font-family: 'Cinzel Decorative', serif; font-size: 1.1rem; font-weight: 700;
-    letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer;
-    background: linear-gradient(180deg, #9a2020 0%, #5a0e0e 100%);
-    color: var(--gold-light); border: 1px solid #c03030; border-radius: 4px;
-    transition: all 0.2s; text-shadow: 0 1px 0 rgba(0,0,0,0.5);
-  }
-  .fight-btn:hover:not(:disabled) {
-    background: linear-gradient(180deg, #c02828 0%, #780f0f 100%);
-    transform: translateY(-1px); box-shadow: 0 4px 20px rgba(139,26,26,0.4);
-  }
-  .fight-btn:active:not(:disabled) { transform: translateY(0); }
-  .fight-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-  /* Battle Log */
-  .battle-log {
-    background: var(--dark0); border: 1px solid var(--dark4); border-radius: 4px;
-    padding: 1rem; min-height: 160px; max-height: 220px; overflow-y: auto;
-    font-size: 0.88rem; line-height: 1.7;
-  }
-  .log-line { margin: 0; padding: 2px 0; }
-  .log-line.sys { color: var(--text-muted); font-style: italic; font-size: 0.78rem; }
-  .log-line.atk { color: #ff9a9a; }
-  .log-line.def { color: #9ad4ff; }
-  .log-line.win { color: var(--success); font-weight: 700; font-size: 1rem; font-family: 'Cinzel', serif; }
-  .log-line.lose { color: var(--blood-bright); font-weight: 700; font-size: 1rem; font-family: 'Cinzel', serif; }
-  .log-line.gold { color: var(--gold-light); font-family: 'Cinzel', serif; }
-
-  /* Result banner */
-  .result-banner {
-    display: none; text-align: center; padding: 1.5rem;
-    border-radius: 4px; margin-top: 1rem; animation: fadeIn 0.5s ease;
-  }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-  .result-banner.victory {
-    display: block; background: rgba(62,207,110,0.1);
-    border: 1px solid #2a8a4a; color: var(--success);
-  }
-  .result-banner.defeat {
-    display: block; background: rgba(139,26,26,0.15);
-    border: 1px solid var(--blood); color: #ff8080;
-  }
-  .result-title {
-    font-family: 'Cinzel Decorative', serif; font-size: 1.5rem;
-    font-weight: 900; margin-bottom: 0.5rem;
-  }
-  .result-sub { font-size: 0.9rem; opacity: 0.85; font-style: italic; }
-
-  .hoard-label {
-    font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.15em;
-    color: var(--text-muted); text-transform: uppercase; margin-top: 8px;
-  }
-  .hoard-count {
-    font-family: 'Cinzel Decorative', serif; font-size: 0.95rem; font-weight: 700;
-    color: var(--blood-bright); margin-top: 2px;
-    transition: color 0.4s, transform 0.3s;
-  }
-  .hoard-count.pulse {
-    animation: hoard-pulse 0.5s ease;
-  }
-  @keyframes hoard-pulse {
-    0%   { transform: scale(1);    color: var(--blood-bright); }
-    40%  { transform: scale(1.35); color: #ff4444; }
-    100% { transform: scale(1);    color: var(--blood-bright); }
-  }
-
-  /* Shake animation */
-  @keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-8px)} 40%{transform:translateX(8px)} 60%{transform:translateX(-5px)} 80%{transform:translateX(5px)} }
-  .shaking { animation: shake 0.4s ease; }
-  @keyframes glow-gold { 0%,100%{filter:drop-shadow(0 0 8px rgba(201,168,76,0.3))} 50%{filter:drop-shadow(0 0 24px rgba(201,168,76,0.8))} }
-  .glowing { animation: glow-gold 0.6s ease; }
-
-  /* === INSTRUCTIONS === */
-  .instructions-box {
-    background: var(--dark2); border: 1px solid var(--gold-dark); border-radius: 6px;
-    padding: 1.75rem; margin: 1.5rem 0;
-  }
-  .step {
-    display: flex; gap: 1.25rem; align-items: flex-start; margin-bottom: 1.5rem;
-  }
-  .step:last-child { margin-bottom: 0; }
-  .step-num {
-    font-family: 'Cinzel Decorative', serif; font-size: 1.2rem; font-weight: 900;
-    color: var(--gold); min-width: 32px; line-height: 1.4;
-  }
-  .step-body { flex: 1; }
-  .step-title {
-    font-family: 'Cinzel', serif; font-size: 0.9rem; font-weight: 600;
-    color: var(--gold-light); letter-spacing: 0.06em; margin-bottom: 0.4rem;
-  }
-  .step-desc { font-size: 0.88rem; color: var(--text-body); line-height: 1.65; }
-  .code-pill {
-    display: inline-block; background: var(--dark0); border: 1px solid var(--dark4);
-    border-radius: 3px; padding: 0.15rem 0.5rem; font-family: 'Courier New', monospace;
-    font-size: 0.78rem; color: #a0d0ff; word-break: break-all;
-  }
-  .highlight-row {
-    background: rgba(201,168,76,0.08); border-left: 3px solid var(--gold);
-    border-radius: 0 4px 4px 0; padding: 0.75rem 1rem; margin: 0.75rem 0;
-    font-size: 0.85rem;
-  }
-
-  /* === CONTRACT CODE === */
-  .code-block {
-    background: var(--dark0); border: 1px solid var(--dark4); border-radius: 6px;
-    padding: 1.5rem; overflow-x: auto; margin: 1.5rem 0;
-    font-family: 'Courier New', monospace; font-size: 0.78rem; line-height: 1.7;
-    color: #b0c8e8;
-  }
-  .kw { color: #c792ea; }
-  .ty { color: #82aaff; }
-  .str { color: #c3e88d; }
-  .cm { color: #546078; font-style: italic; }
-  .num { color: #f78c6c; }
-  .fn { color: #82aaff; }
-
-  /* === FOOTER === */
-  .footer {
-    text-align: center; margin-top: 4rem; padding-top: 2rem;
-    border-top: 1px solid var(--dark4);
-    font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.1em;
-    color: var(--text-muted);
-  }
-
-  /* Scrollbar */
-  .battle-log::-webkit-scrollbar { width: 4px; }
-  .battle-log::-webkit-scrollbar-track { background: var(--dark0); }
-  .battle-log::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 2px; }
-
-  /* responsive */
-  @media(max-width: 500px) {
-    .fighters { grid-template-columns: 1fr 50px 1fr; }
-    .fighter-sprite { font-size: 2.5rem; }
-    .vs-text { font-size: 1rem; }
-    .control-label { min-width: 100px; font-size: 0.68rem; }
+  @media(max-width:420px) {
+    .card { padding:2rem 1.25rem; }
+    .fighter-sprite { font-size:2.2rem; }
   }
 </style>
 </head>
 <body>
 
-<!-- Stars -->
-<div id="stars"></div>
+<div id="stars"><div class="star" style="left: 24.8574%; top: 43.463%; width: 1.78549px; height: 1.78549px; --d: 5.7s; animation-delay: 0.1s;"></div><div class="star" style="left: 61.7597%; top: 67.3161%; width: 1.07697px; height: 1.07697px; --d: 3.9s; animation-delay: 2.4s;"></div><div class="star" style="left: 67.9562%; top: 41.0035%; width: 1.89185px; height: 1.89185px; --d: 3.2s; animation-delay: 5.2s;"></div><div class="star" style="left: 48.0132%; top: 51.7317%; width: 1.38291px; height: 1.38291px; --d: 5.3s; animation-delay: 4.2s;"></div><div class="star" style="left: 48.6504%; top: 85.3477%; width: 1.79465px; height: 1.79465px; --d: 4.3s; animation-delay: 3.5s;"></div><div class="star" style="left: 53.9468%; top: 24.0447%; width: 0.537543px; height: 0.537543px; --d: 5.7s; animation-delay: 5.8s;"></div><div class="star" style="left: 63.5028%; top: 24.8881%; width: 1.23774px; height: 1.23774px; --d: 2.5s; animation-delay: 1.3s;"></div><div class="star" style="left: 64.0133%; top: 46.7402%; width: 0.524218px; height: 0.524218px; --d: 5.6s; animation-delay: 3.1s;"></div><div class="star" style="left: 58.4836%; top: 87.9477%; width: 2.14928px; height: 2.14928px; --d: 4.4s; animation-delay: 1.9s;"></div><div class="star" style="left: 63.5462%; top: 67.5392%; width: 1.6194px; height: 1.6194px; --d: 3.7s; animation-delay: 2.2s;"></div><div class="star" style="left: 65.3771%; top: 34.2966%; width: 1.02226px; height: 1.02226px; --d: 6.0s; animation-delay: 3.1s;"></div><div class="star" style="left: 20.9822%; top: 80.5802%; width: 0.965512px; height: 0.965512px; --d: 6.0s; animation-delay: 2.9s;"></div><div class="star" style="left: 95.1784%; top: 57.3048%; width: 0.432171px; height: 0.432171px; --d: 3.2s; animation-delay: 2.2s;"></div><div class="star" style="left: 43.0335%; top: 95.3956%; width: 0.597106px; height: 0.597106px; --d: 2.1s; animation-delay: 5.6s;"></div><div class="star" style="left: 12.8562%; top: 67.1293%; width: 0.815957px; height: 0.815957px; --d: 5.6s; animation-delay: 3s;"></div><div class="star" style="left: 67.5141%; top: 45.0762%; width: 0.816546px; height: 0.816546px; --d: 3.4s; animation-delay: 3.7s;"></div><div class="star" style="left: 36.9218%; top: 64.887%; width: 1.78113px; height: 1.78113px; --d: 2.3s; animation-delay: 1s;"></div><div class="star" style="left: 65.6347%; top: 83.9682%; width: 1.10241px; height: 1.10241px; --d: 4.6s; animation-delay: 1.6s;"></div><div class="star" style="left: 74.7515%; top: 45.725%; width: 0.476439px; height: 0.476439px; --d: 4.6s; animation-delay: 3.5s;"></div><div class="star" style="left: 75.006%; top: 30.4126%; width: 1.16823px; height: 1.16823px; --d: 3.0s; animation-delay: 1.8s;"></div><div class="star" style="left: 50.8605%; top: 47.9688%; width: 0.47161px; height: 0.47161px; --d: 4.1s; animation-delay: 0.1s;"></div><div class="star" style="left: 59.9166%; top: 38.2069%; width: 1.88591px; height: 1.88591px; --d: 2.5s; animation-delay: 0.8s;"></div><div class="star" style="left: 0.64997%; top: 16.199%; width: 1.38919px; height: 1.38919px; --d: 4.5s; animation-delay: 3.1s;"></div><div class="star" style="left: 60.5284%; top: 3.81448%; width: 1.45031px; height: 1.45031px; --d: 3.3s; animation-delay: 0.3s;"></div><div class="star" style="left: 69.8579%; top: 9.38835%; width: 1.86597px; height: 1.86597px; --d: 3.9s; animation-delay: 2.1s;"></div><div class="star" style="left: 58.4007%; top: 24.8535%; width: 1.44265px; height: 1.44265px; --d: 4.1s; animation-delay: 0.4s;"></div><div class="star" style="left: 8.2768%; top: 53.1717%; width: 1.30199px; height: 1.30199px; --d: 4.4s; animation-delay: 4.9s;"></div><div class="star" style="left: 68.7578%; top: 33.6023%; width: 0.606259px; height: 0.606259px; --d: 4.6s; animation-delay: 4.7s;"></div><div class="star" style="left: 27.9668%; top: 86.1593%; width: 1.8934px; height: 1.8934px; --d: 4.5s; animation-delay: 0.6s;"></div><div class="star" style="left: 95.9836%; top: 47.3215%; width: 0.74191px; height: 0.74191px; --d: 2.6s; animation-delay: 3s;"></div><div class="star" style="left: 23.8275%; top: 47.1582%; width: 1.0017px; height: 1.0017px; --d: 3.9s; animation-delay: 5.8s;"></div><div class="star" style="left: 18.8443%; top: 15.2931%; width: 1.3493px; height: 1.3493px; --d: 3.9s; animation-delay: 3.3s;"></div><div class="star" style="left: 22.5061%; top: 48.5291%; width: 0.454019px; height: 0.454019px; --d: 5.6s; animation-delay: 0.7s;"></div><div class="star" style="left: 84.3806%; top: 27.1357%; width: 1.74677px; height: 1.74677px; --d: 4.0s; animation-delay: 5.6s;"></div><div class="star" style="left: 74.6374%; top: 29.5604%; width: 0.752985px; height: 0.752985px; --d: 4.7s; animation-delay: 0.2s;"></div><div class="star" style="left: 8.22211%; top: 63.2955%; width: 0.537657px; height: 0.537657px; --d: 4.3s; animation-delay: 2.5s;"></div><div class="star" style="left: 35.7171%; top: 56.6436%; width: 2.39519px; height: 2.39519px; --d: 5.2s; animation-delay: 2.8s;"></div><div class="star" style="left: 32.1874%; top: 77.5969%; width: 1.00487px; height: 1.00487px; --d: 4.3s; animation-delay: 3.9s;"></div><div class="star" style="left: 98.5553%; top: 66.1092%; width: 0.472767px; height: 0.472767px; --d: 5.2s; animation-delay: 1.2s;"></div><div class="star" style="left: 99.8564%; top: 7.29623%; width: 1.82153px; height: 1.82153px; --d: 3.5s; animation-delay: 2.7s;"></div><div class="star" style="left: 47.8067%; top: 93.7339%; width: 2.02051px; height: 2.02051px; --d: 2.5s; animation-delay: 0.8s;"></div><div class="star" style="left: 26.7237%; top: 18.967%; width: 1.15773px; height: 1.15773px; --d: 5.7s; animation-delay: 3.8s;"></div><div class="star" style="left: 97.7045%; top: 27.8684%; width: 1.55425px; height: 1.55425px; --d: 2.9s; animation-delay: 3.3s;"></div><div class="star" style="left: 5.2878%; top: 27.8223%; width: 2.39849px; height: 2.39849px; --d: 3.3s; animation-delay: 1.3s;"></div><div class="star" style="left: 65.6034%; top: 85.1783%; width: 0.895257px; height: 0.895257px; --d: 4.8s; animation-delay: 5.2s;"></div><div class="star" style="left: 57.9239%; top: 36.7052%; width: 1.06037px; height: 1.06037px; --d: 3.5s; animation-delay: 5.2s;"></div><div class="star" style="left: 36.232%; top: 42.5428%; width: 0.671148px; height: 0.671148px; --d: 5.2s; animation-delay: 1.7s;"></div><div class="star" style="left: 77.7775%; top: 70.8126%; width: 0.617931px; height: 0.617931px; --d: 4.1s; animation-delay: 3.1s;"></div><div class="star" style="left: 33.6941%; top: 97.1458%; width: 1.63557px; height: 1.63557px; --d: 3.1s; animation-delay: 5.6s;"></div><div class="star" style="left: 79.259%; top: 87.4368%; width: 0.670939px; height: 0.670939px; --d: 5.1s; animation-delay: 0.1s;"></div><div class="star" style="left: 51.6925%; top: 57.0393%; width: 1.96057px; height: 1.96057px; --d: 5.0s; animation-delay: 3.4s;"></div><div class="star" style="left: 68.9408%; top: 9.04118%; width: 1.12067px; height: 1.12067px; --d: 2.5s; animation-delay: 3.5s;"></div><div class="star" style="left: 34.9913%; top: 62.9117%; width: 0.771935px; height: 0.771935px; --d: 4.0s; animation-delay: 3s;"></div><div class="star" style="left: 48.2312%; top: 71.0715%; width: 1.54309px; height: 1.54309px; --d: 5.4s; animation-delay: 4.8s;"></div><div class="star" style="left: 20.3807%; top: 12.8721%; width: 2.08245px; height: 2.08245px; --d: 5.9s; animation-delay: 2.2s;"></div><div class="star" style="left: 92.525%; top: 49.9144%; width: 1.62649px; height: 1.62649px; --d: 4.4s; animation-delay: 4.9s;"></div><div class="star" style="left: 50.745%; top: 9.93636%; width: 0.737656px; height: 0.737656px; --d: 3.4s; animation-delay: 3.6s;"></div><div class="star" style="left: 14.7425%; top: 72.2393%; width: 2.31021px; height: 2.31021px; --d: 5.2s; animation-delay: 3.9s;"></div><div class="star" style="left: 9.59475%; top: 88.0826%; width: 2.29656px; height: 2.29656px; --d: 3.7s; animation-delay: 2.9s;"></div><div class="star" style="left: 16.7387%; top: 95.755%; width: 0.519872px; height: 0.519872px; --d: 4.0s; animation-delay: 3.9s;"></div><div class="star" style="left: 90.6861%; top: 88.5986%; width: 0.478833px; height: 0.478833px; --d: 3.9s; animation-delay: 3.1s;"></div><div class="star" style="left: 28.6691%; top: 49.2368%; width: 1.01305px; height: 1.01305px; --d: 5.1s; animation-delay: 4s;"></div><div class="star" style="left: 96.6007%; top: 43.7095%; width: 2.10553px; height: 2.10553px; --d: 2.8s; animation-delay: 4.5s;"></div><div class="star" style="left: 90.2238%; top: 53.7028%; width: 2.24524px; height: 2.24524px; --d: 5.8s; animation-delay: 2.9s;"></div><div class="star" style="left: 60.9291%; top: 4.45361%; width: 1.99814px; height: 1.99814px; --d: 3.1s; animation-delay: 5.9s;"></div><div class="star" style="left: 3.67125%; top: 53.0687%; width: 0.970805px; height: 0.970805px; --d: 5.6s; animation-delay: 5.8s;"></div><div class="star" style="left: 24.7104%; top: 11.3242%; width: 2.23295px; height: 2.23295px; --d: 3.1s; animation-delay: 3.7s;"></div><div class="star" style="left: 61.5707%; top: 99.1219%; width: 1.10416px; height: 1.10416px; --d: 2.1s; animation-delay: 0.7s;"></div><div class="star" style="left: 12.7102%; top: 70.2441%; width: 1.59632px; height: 1.59632px; --d: 4.1s; animation-delay: 2.5s;"></div><div class="star" style="left: 90.0834%; top: 84.1599%; width: 0.729295px; height: 0.729295px; --d: 5.5s; animation-delay: 0.7s;"></div><div class="star" style="left: 0.134823%; top: 51.592%; width: 1.14121px; height: 1.14121px; --d: 5.9s; animation-delay: 1.5s;"></div><div class="star" style="left: 73.0461%; top: 82.4139%; width: 0.408989px; height: 0.408989px; --d: 4.2s; animation-delay: 0.3s;"></div><div class="star" style="left: 34.3641%; top: 75.3265%; width: 1.16559px; height: 1.16559px; --d: 5.2s; animation-delay: 2.5s;"></div><div class="star" style="left: 10.8264%; top: 94.097%; width: 0.537764px; height: 0.537764px; --d: 5.6s; animation-delay: 5.3s;"></div><div class="star" style="left: 10.4565%; top: 51.0841%; width: 1.95751px; height: 1.95751px; --d: 4.9s; animation-delay: 0.2s;"></div><div class="star" style="left: 13.3251%; top: 6.71534%; width: 1.78863px; height: 1.78863px; --d: 5.8s; animation-delay: 2.3s;"></div><div class="star" style="left: 38.125%; top: 62.5909%; width: 2.04085px; height: 2.04085px; --d: 3.8s; animation-delay: 0.7s;"></div><div class="star" style="left: 6.27542%; top: 85.1401%; width: 0.459441px; height: 0.459441px; --d: 3.5s; animation-delay: 2.8s;"></div><div class="star" style="left: 66.8967%; top: 55.3405%; width: 2.28835px; height: 2.28835px; --d: 3.2s; animation-delay: 0.5s;"></div><div class="star" style="left: 90.3178%; top: 12.5571%; width: 2.12414px; height: 2.12414px; --d: 3.7s; animation-delay: 5.1s;"></div><div class="star" style="left: 28.6197%; top: 19.7994%; width: 1.048px; height: 1.048px; --d: 4.0s; animation-delay: 5.1s;"></div><div class="star" style="left: 51.8428%; top: 77.2391%; width: 1.62223px; height: 1.62223px; --d: 3.0s; animation-delay: 4.2s;"></div><div class="star" style="left: 80.6748%; top: 27.1278%; width: 0.828732px; height: 0.828732px; --d: 3.4s; animation-delay: 3.5s;"></div><div class="star" style="left: 92.2707%; top: 12.2083%; width: 1.66076px; height: 1.66076px; --d: 5.5s; animation-delay: 4s;"></div><div class="star" style="left: 4.0411%; top: 5.40527%; width: 2.28592px; height: 2.28592px; --d: 2.6s; animation-delay: 2.6s;"></div><div class="star" style="left: 12.1999%; top: 2.40863%; width: 1.00979px; height: 1.00979px; --d: 4.6s; animation-delay: 5.1s;"></div><div class="star" style="left: 39.6398%; top: 71.8776%; width: 2.15327px; height: 2.15327px; --d: 2.2s; animation-delay: 1.2s;"></div><div class="star" style="left: 62.3102%; top: 85.7375%; width: 2.23678px; height: 2.23678px; --d: 2.3s; animation-delay: 0.6s;"></div><div class="star" style="left: 7.16188%; top: 47.7276%; width: 0.412508px; height: 0.412508px; --d: 2.4s; animation-delay: 4.9s;"></div><div class="star" style="left: 85.6714%; top: 43.295%; width: 2.26064px; height: 2.26064px; --d: 4.9s; animation-delay: 4.3s;"></div><div class="star" style="left: 66.2757%; top: 91.4224%; width: 0.671295px; height: 0.671295px; --d: 4.7s; animation-delay: 0.4s;"></div><div class="star" style="left: 69.5117%; top: 41.832%; width: 1.94752px; height: 1.94752px; --d: 4.7s; animation-delay: 0.8s;"></div><div class="star" style="left: 38.1329%; top: 10.7043%; width: 1.96756px; height: 1.96756px; --d: 4.7s; animation-delay: 1.6s;"></div><div class="star" style="left: 77.9645%; top: 9.36302%; width: 1.27652px; height: 1.27652px; --d: 4.1s; animation-delay: 1.2s;"></div><div class="star" style="left: 74.6083%; top: 72.1283%; width: 0.77955px; height: 0.77955px; --d: 2.5s; animation-delay: 3.6s;"></div><div class="star" style="left: 39.5631%; top: 34.8816%; width: 0.842245px; height: 0.842245px; --d: 3.8s; animation-delay: 4.2s;"></div><div class="star" style="left: 25.0767%; top: 59.2823%; width: 2.30498px; height: 2.30498px; --d: 5.9s; animation-delay: 0.6s;"></div><div class="star" style="left: 67.915%; top: 18.4474%; width: 1.95158px; height: 1.95158px; --d: 3.3s; animation-delay: 1.4s;"></div><div class="star" style="left: 81.3175%; top: 47.0103%; width: 1.97732px; height: 1.97732px; --d: 5.8s; animation-delay: 0.2s;"></div><div class="star" style="left: 78.4768%; top: 92.5834%; width: 1.24334px; height: 1.24334px; --d: 4.7s; animation-delay: 5.8s;"></div><div class="star" style="left: 17.894%; top: 72.2439%; width: 0.592934px; height: 0.592934px; --d: 4.1s; animation-delay: 2.4s;"></div><div class="star" style="left: 94.7931%; top: 37.04%; width: 0.689443px; height: 0.689443px; --d: 3.5s; animation-delay: 1.3s;"></div><div class="star" style="left: 30.0916%; top: 57.1552%; width: 0.925514px; height: 0.925514px; --d: 2.3s; animation-delay: 2.9s;"></div><div class="star" style="left: 23.3363%; top: 34.3778%; width: 0.46009px; height: 0.46009px; --d: 4.0s; animation-delay: 5.1s;"></div><div class="star" style="left: 11.0463%; top: 40.3737%; width: 0.690668px; height: 0.690668px; --d: 5.9s; animation-delay: 2.1s;"></div><div class="star" style="left: 96.4762%; top: 94.0907%; width: 1.39474px; height: 1.39474px; --d: 5.8s; animation-delay: 1.3s;"></div><div class="star" style="left: 98.1506%; top: 87.212%; width: 0.494662px; height: 0.494662px; --d: 4.5s; animation-delay: 3.5s;"></div><div class="star" style="left: 77.7736%; top: 21.974%; width: 1.74431px; height: 1.74431px; --d: 3.5s; animation-delay: 0.7s;"></div><div class="star" style="left: 16.3094%; top: 8.70543%; width: 2.3413px; height: 2.3413px; --d: 2.5s; animation-delay: 2.4s;"></div><div class="star" style="left: 66.1373%; top: 63.3819%; width: 0.686211px; height: 0.686211px; --d: 6.0s; animation-delay: 4.3s;"></div><div class="star" style="left: 11.8582%; top: 56.1796%; width: 2.27483px; height: 2.27483px; --d: 3.9s; animation-delay: 4.2s;"></div><div class="star" style="left: 37.1434%; top: 6.25405%; width: 2.30012px; height: 2.30012px; --d: 3.8s; animation-delay: 0.6s;"></div><div class="star" style="left: 47.9269%; top: 85.7124%; width: 1.18111px; height: 1.18111px; --d: 4.8s; animation-delay: 5.7s;"></div><div class="star" style="left: 13.5944%; top: 75.6097%; width: 1.7991px; height: 1.7991px; --d: 2.2s; animation-delay: 4.4s;"></div><div class="star" style="left: 87.4856%; top: 64.2251%; width: 0.565218px; height: 0.565218px; --d: 2.2s; animation-delay: 2.5s;"></div><div class="star" style="left: 11.7102%; top: 37.5999%; width: 0.780553px; height: 0.780553px; --d: 4.6s; animation-delay: 1.4s;"></div><div class="star" style="left: 67.7035%; top: 6.6484%; width: 2.2261px; height: 2.2261px; --d: 5.8s; animation-delay: 4.5s;"></div><div class="star" style="left: 45.3504%; top: 59.571%; width: 1.704px; height: 1.704px; --d: 2.3s; animation-delay: 3.7s;"></div><div class="star" style="left: 57.4806%; top: 5.4156%; width: 0.562352px; height: 0.562352px; --d: 3.7s; animation-delay: 0.8s;"></div><div class="star" style="left: 71.1999%; top: 23.4166%; width: 0.980358px; height: 0.980358px; --d: 4.8s; animation-delay: 0.8s;"></div><div class="star" style="left: 63.3178%; top: 76.196%; width: 1.47764px; height: 1.47764px; --d: 3.4s; animation-delay: 5.1s;"></div><div class="star" style="left: 19.7921%; top: 69.2393%; width: 1.13631px; height: 1.13631px; --d: 3.7s; animation-delay: 5.3s;"></div><div class="star" style="left: 97.7111%; top: 74.1076%; width: 0.642135px; height: 0.642135px; --d: 4.3s; animation-delay: 1.5s;"></div><div class="star" style="left: 8.90137%; top: 64.4212%; width: 1.59925px; height: 1.59925px; --d: 2.8s; animation-delay: 4.7s;"></div><div class="star" style="left: 85.7717%; top: 53.3706%; width: 2.34209px; height: 2.34209px; --d: 2.9s; animation-delay: 4.8s;"></div><div class="star" style="left: 91.2322%; top: 63.9682%; width: 0.601009px; height: 0.601009px; --d: 2.0s; animation-delay: 3.8s;"></div><div class="star" style="left: 0.542071%; top: 36.3641%; width: 2.24561px; height: 2.24561px; --d: 4.4s; animation-delay: 0.1s;"></div><div class="star" style="left: 66.2841%; top: 21.1626%; width: 2.34416px; height: 2.34416px; --d: 3.2s; animation-delay: 0.1s;"></div><div class="star" style="left: 51.7007%; top: 65.8975%; width: 1.08503px; height: 1.08503px; --d: 4.3s; animation-delay: 4.4s;"></div><div class="star" style="left: 5.32855%; top: 21.2885%; width: 0.491262px; height: 0.491262px; --d: 2.5s; animation-delay: 5.7s;"></div><div class="star" style="left: 94.4435%; top: 65.5964%; width: 2.11333px; height: 2.11333px; --d: 2.2s; animation-delay: 5.4s;"></div><div class="star" style="left: 34.3385%; top: 11.767%; width: 0.425983px; height: 0.425983px; --d: 2.9s; animation-delay: 5.1s;"></div><div class="star" style="left: 54.1553%; top: 89.5324%; width: 1.86636px; height: 1.86636px; --d: 3.7s; animation-delay: 0.6s;"></div><div class="star" style="left: 56.9693%; top: 68.1023%; width: 1.98991px; height: 1.98991px; --d: 3.2s; animation-delay: 4.3s;"></div><div class="star" style="left: 50.6124%; top: 81.0126%; width: 0.925758px; height: 0.925758px; --d: 3.2s; animation-delay: 5.1s;"></div><div class="star" style="left: 58.8932%; top: 57.2359%; width: 1.37675px; height: 1.37675px; --d: 4.9s; animation-delay: 1.7s;"></div><div class="star" style="left: 89.3118%; top: 87.6988%; width: 0.927718px; height: 0.927718px; --d: 3.1s; animation-delay: 2.1s;"></div><div class="star" style="left: 45.6819%; top: 46.3941%; width: 1.15726px; height: 1.15726px; --d: 2.9s; animation-delay: 2.8s;"></div><div class="star" style="left: 43.6167%; top: 1.11339%; width: 1.38049px; height: 1.38049px; --d: 4.0s; animation-delay: 2.5s;"></div><div class="star" style="left: 50.8905%; top: 21.1446%; width: 2.16729px; height: 2.16729px; --d: 5.1s; animation-delay: 5.5s;"></div></div>
 
-<div class="wrap">
+<div class="card">
+  <div class="eyebrow">Sepolia Testnet • ERC-20</div>
+  <div class="site-title">⚔ SWORD</div>
+  <div class="site-sub">Token of Champions • Vanquish the Monster</div>
+  <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
 
-  <!-- HEADER -->
-  <header class="site-header">
-    <div class="eyebrow">Sepolia Testnet &bull; ERC-20 Battle Token</div>
-    <h1 class="site-title">&#x2694; SWORD</h1>
-    <div class="site-sub">Token of Champions &bull; Vanquish the Monster. Claim the Spoils.</div>
-    <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
-  </header>
-
-  <!-- TOKEN DETAILS -->
-  <div class="section-title">Token Details</div>
-  <div class="token-grid">
-    <div class="token-card">
-      <div class="tc-label">Token Name</div>
-      <div class="tc-value">SWORD</div>
-    </div>
-    <div class="token-card">
-      <div class="tc-label">Total Supply</div>
-      <div class="tc-value">1,000,000</div>
-    </div>
-    <div class="token-card">
-      <div class="tc-label">Network</div>
-      <div class="tc-value">Sepolia</div>
-    </div>
-    <div class="token-card">
-      <div class="tc-label">Swords to Defeat Monster</div>
-      <div class="tc-value">100</div>
-    </div>
-    <div class="token-card">
-      <div class="tc-label">Victory Reward</div>
-      <div class="tc-value">0.001 ETH</div>
-    </div>
-    <div class="token-card">
-      <div class="tc-label">Deployed to</div>
-      <div class="tc-value small">0xe549E983358dbCEC0f85CB59F9b7dCd35f058Ea7</div>
+  <!-- PRE-CONNECT -->
+  <div id="pre-connect">
+    <svg class="metamask-icon" viewBox="0 0 318 318" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M274.1 35.5l-99.7 74.1 18.4-43.5 81.3-30.6z" fill="#E2761B" stroke="#E2761B" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M44.4 35.5l98.9 74.7-17.6-44.1-81.3-30.6zM238.3 206.8l-26.5 40.6 56.7 15.6 16.3-55.3-46.5-.9zM33.9 207.7l16.2 55.3 56.7-15.6-26.5-40.6-46.4.9z" fill="#E4761B" stroke="#E4761B" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M103.6 138.2l-15.8 23.9 56.3 2.5-2-60.5-38.5 34.1zM214.9 138.2l-39-34.7-1.3 61.1 56.2-2.5-15.9-23.9zM106.8 247.4l33.8-16.5-29.2-22.8-4.6 39.3zM177.9 230.9l33.9 16.5-4.7-39.3-29.2 22.8z" fill="#E4761B" stroke="#E4761B" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M211.8 247.4l-33.9-16.5 2.7 22.1-.3 9.3 31.5-14.9zM106.8 247.4l31.5 14.9-.2-9.3 2.5-22.1-33.8 16.5z" fill="#D7C1B3" stroke="#D7C1B3" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M138.8 193.5l-28.2-8.3 19.9-9.1 8.3 17.4zM179.7 193.5l8.3-17.4 20 9.1-28.3 8.3z" fill="#233447" stroke="#233447" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M106.8 247.4l4.8-40.6-31.3.9 26.5 39.7zM206 206.8l4.8 40.6 26.5-39.7-31.3-.9zM231.1 162.1l-56.2 2.5 5.2 28.9 8.3-17.4 20 9.1 22.7-23.1zM110.6 185.2l20-9.1 8.2 17.4 5.3-28.9-56.3-2.5 22.8 23.1z" fill="#CD6116" stroke="#CD6116" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M84.3 162.1l23.6 46-.8-22.9-22.8-23.1zM211.4 185.2l-1 22.9 23.7-46-22.7 23.1zM140.6 164.6l-5.3 28.9 6.6 34.1 1.5-44.9-2.8-18.1zM177.9 164.6l-2.7 18 1.3 45 6.7-34.1-5.3-28.9z" fill="#E4751F" stroke="#E4751F" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M183.2 193.5l-6.7 34.1 4.8 3.3 29.2-22.8 1-22.9-28.3 8.3zM110.6 185.2l.8 22.9 29.2 22.8 4.8-3.3-6.6-34.1-28.2-8.3z" fill="#F6851B" stroke="#F6851B" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M183.5 262.3l.3-9.3-2.5-2.2h-37.6l-2.4 2.2.2 9.3-31.5-14.9 11 9 22.3 15.5h38.3l22.4-15.5 11-9-31.5 14.9z" fill="#C0AD9E" stroke="#C0AD9E" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M181.3 230.9l-4.8-3.3h-27.5l-4.8 3.3-2.5 22.1 2.4-2.2h37.6l2.5 2.2-2.9-22.1z" fill="#161616" stroke="#161616" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M278.3 114.2l8.5-40.8-12.7-37.9-96.8 71.8 37.2 31.5 52.6 15.4 11.6-13.5-5-3.6 8-7.3-6.2-4.8 8-6.1-5.2-4.7zM31.8 73.4l8.5 40.8-5.4 4.7 8 6.1-6.1 4.8 8 7.3-5 3.6 11.5 13.5 52.6-15.4 37.2-31.5-96.8-71.8-12.5 37.9z" fill="#763D16" stroke="#763D16" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M267.1 154.2l-52.6-15.4 15.9 23.9-23.7 46 31.2-.4h46.5l-17.3-54.1zM103.6 138.8l-52.6 15.4-17.2 54.1h46.4l31.1.4-23.6-46 15.9-23.9zM177.9 164.6l3.3-57.7 15.2-41.1h-67.5l15 41.1 3.5 57.7 1.2 18.2.1 44.8h27.5l.2-44.8 1.5-18.2z" fill="#F6851B" stroke="#F6851B" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+    <p class="connect-hint">Connect your MetaMask wallet to enter the Battle Arena.<br>You need SWORD tokens and Sepolia ETH for gas.</p>
+    <button class="connect-btn-main" id="connect-btn" onclick="connectWallet()">
+      <svg width="18" height="18" viewBox="0 0 318 318" fill="none"><path d="M274.1 35.5l-99.7 74.1 18.4-43.5 81.3-30.6z" fill="#fff" opacity="0.9"></path><path d="M44.4 35.5l98.9 74.7-17.6-44.1-81.3-30.6z" fill="#fff" opacity="0.7"></path></svg>
+      Connect MetaMask
+    </button>
+    <div class="no-metamask" id="no-metamask" style="display: block;">
+      MetaMask not detected.<br>
+      <a href="https://metamask.io/download/" target="_blank">Install MetaMask</a> then refresh this page.
     </div>
   </div>
 
-  <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
-
-  <!-- LIVE BATTLE DEMO -->
-  <div class="section-title">&#x2694; Live Battle Simulator</div>
-  <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:1rem;">
-    Choose your sword count below. 100 or more swords gives a strong chance of victory. Under 100 swords and the monster has a 98% chance to crush you. Press <em>Enter the Arena</em> to watch the battle unfold.
-  </p>
-
-  <div class="arena" id="arena">
-
-    <!-- Wallet Bar -->
-    <div class="wallet-bar">
-      <div class="wallet-dot" id="wallet-dot"></div>
-      <div class="wallet-status" id="wallet-status">Not connected — MetaMask required</div>
-      <div class="sword-balance" id="sword-balance" style="display:none"></div>
-      <button class="connect-btn" id="connect-btn" onclick="connectWallet()">Connect Wallet</button>
+  <!-- ARENA -->
+  <div id="arena">
+    <div class="wallet-pill">
+      <div class="wallet-dot-sm"></div>
+      <span id="wallet-addr">0x0000...0000</span>
     </div>
+    <div class="sword-bal" id="sword-bal">—</div>
+    <div class="sword-bal-label">SWORD Balance</div>
+    <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
 
-    <!-- Fighters -->
     <div class="fighters">
-      <div class="fighter" id="fighter-player">
-        <span class="fighter-sprite" id="sprite-player">&#x1F9DD;</span>
+      <div class="fighter">
+        <span class="fighter-sprite" id="sprite-player">🧝</span>
         <div class="fighter-name">Champion</div>
-        <div class="fighter-hp" id="hp-player-text">100 HP</div>
+        <div class="fighter-sub" id="hp-player-text">100 HP</div>
         <div class="hp-bar"><div class="hp-fill" id="hp-player-fill" style="width:100%"></div></div>
       </div>
       <div class="vs-text">VS</div>
-      <div class="fighter" id="fighter-monster">
-        <span class="fighter-sprite" id="sprite-monster">&#x1F409;</span>
+      <div class="fighter">
+        <span class="fighter-sprite" id="sprite-monster">🐉</span>
         <div class="fighter-name">The Wyrm</div>
-        <div class="fighter-hp" id="hp-monster-text">100 HP</div>
+        <div class="fighter-sub" id="hp-monster-text">100 HP</div>
         <div class="hp-bar"><div class="hp-fill" id="hp-monster-fill" style="width:100%"></div></div>
         <div class="hoard-label">Swords Collected</div>
-        <div class="hoard-count" id="hoard-count">0 &#x2694;</div>
+        <div class="hoard-count" id="hoard-count">0 ⚔</div>
       </div>
     </div>
 
-    <!-- Controls -->
-    <div class="battle-controls">
-      <div class="control-row">
-        <span class="control-label">Swords to Send</span>
-        <input type="number" class="sword-input" id="sword-count" value="50" min="1" max="1000000" />
-        <span class="chance-badge bad" id="chance-badge">Monster wins 98%</span>
-      </div>
+    <div class="input-row">
+      <input type="number" class="sword-input" id="sword-count" value="100" min="1" placeholder="SWORD amount">
+      <span class="chance-badge good" id="chance-badge">Player wins 98%</span>
     </div>
 
-    <button class="fight-btn" id="fight-btn" onclick="startBattle()">&#x2694; Enter the Arena</button>
+    <button class="fight-btn" id="fight-btn" onclick="startBattle()">⚔ Enter the Arena</button>
 
-    <!-- Log -->
-    <div style="margin-top:1.5rem;">
-      <div class="section-title" style="margin-top:0; font-size:0.8rem;">Battle Chronicle</div>
+    <div class="log-wrap">
+      <div class="log-title">Battle Chronicle</div>
       <div class="battle-log" id="battle-log">
-        <p class="log-line sys">— Awaiting challenger to enter the arena... —</p>
+        <p class="log-line sys">— Awaiting challenger... —</p>
       </div>
     </div>
 
-    <!-- Result banner -->
     <div class="result-banner" id="result-banner">
       <div class="result-title" id="result-title"></div>
       <div class="result-sub" id="result-sub"></div>
     </div>
 
+    <span class="disconnect" onclick="disconnect()">Disconnect wallet</span>
   </div>
 
-  <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
-
-  <!-- INSTRUCTIONS -->
-  <div class="section-title">How to Play — For Token Holders</div>
-  <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem; font-style:italic;">
-    Prerequisites: You already hold SWORD tokens and have Sepolia ETH for gas.
-  </p>
-
-  <div class="instructions-box">
-    <div class="step">
-      <div class="step-num">I</div>
-      <div class="step-body">
-        <div class="step-title">Add the SWORD Token to Your Wallet</div>
-        <div class="step-desc">
-          In MetaMask (or any Web3 wallet), navigate to <em>Import Token</em> and paste the contract address:<br><br>
-          <span class="code-pill">0xe549E983358dbCEC0f85CB59F9b7dCd35f058Ea7</span><br><br>
-          Enter <strong>SWORD</strong> as the symbol and <strong>18</strong> as decimals. Your balance will appear immediately.
-        </div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">II</div>
-      <div class="step-body">
-        <div class="step-title">Approve the Contract to Spend Your Swords</div>
-        <div class="step-desc">
-          Before battling, you must authorize the battle contract to move your SWORD tokens. Call the <span class="code-pill">approve()</span> function on the SWORD token contract, passing the battle contract address and the amount you wish to stake (minimum 100 SWORD for victory odds in your favor).
-        </div>
-        <div class="highlight-row">
-          Tip: Approve a larger amount once (e.g. 10,000 SWORD) so you do not need to re-approve every match.
-        </div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">III</div>
-      <div class="step-body">
-        <div class="step-title">Call <span class="code-pill">battle(uint256 swordAmount)</span></div>
-        <div class="step-desc">
-          Invoke the battle function on the contract, passing how many SWORD tokens you want to stake into the fight. The contract will:
-          <ul style="margin:0.6rem 0 0 1.2rem; line-height:2;">
-            <li>Transfer your swords to the contract</li>
-            <li>If amount &lt; 100 — monster wins with <strong>98% chance</strong></li>
-            <li>If amount &ge; 100 — player wins with <strong>98% chance</strong></li>
-            <li>On victory: sends <strong>0.001 Sepolia ETH</strong> to your address</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">IV</div>
-      <div class="step-body">
-        <div class="step-title">Verify the Outcome on Sepolia Etherscan</div>
-        <div class="step-desc">
-          After the transaction confirms, check Sepolia Etherscan for your wallet address. A <span class="code-pill">BattleResult</span> event will show whether you won or lost, the amount of SWORD staked, and any ETH reward sent back to you.
-        </div>
-        <div class="highlight-row">
-          Etherscan Sepolia: <span class="code-pill">https://sepolia.etherscan.io/address/0xe549E983358dbCEC0f85CB59F9b7dCd35f058Ea7</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">V</div>
-      <div class="step-body">
-        <div class="step-title">Repeat &amp; Accumulate Rewards</div>
-        <div class="step-desc">
-          Each battle is independent. Stack 100+ SWORD per fight and maintain your 98% win rate. Rewards of 0.001 Sepolia ETH are sent automatically with each victory — no manual claiming required.
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
-
-  <!-- SOLIDITY CONTRACT -->
-  <div class="section-title">Solidity Smart Contract</div>
-  <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem; font-style:italic;">
-    Deploy this contract on Sepolia using Remix IDE or Hardhat. Fund it with Sepolia ETH to pay out victors.
-  </p>
-
-  <div class="code-block"><pre>
-<span class="cm">// SPDX-License-Identifier: MIT</span>
-<span class="kw">pragma solidity</span> ^<span class="num">0.8.20</span>;
-
-<span class="kw">import</span> <span class="str">"@openzeppelin/contracts/token/ERC20/ERC20.sol"</span>;
-<span class="kw">import</span> <span class="str">"@openzeppelin/contracts/access/Ownable.sol"</span>;
-
-<span class="cm">// ─────────────────────────────────────────────────────
-//  SWORD Token — ERC20
-// ─────────────────────────────────────────────────────</span>
-<span class="kw">contract</span> <span class="ty">SwordToken</span> <span class="kw">is</span> <span class="ty">ERC20</span>, <span class="ty">Ownable</span> {
-    <span class="kw">constructor</span>(<span class="ty">address</span> recipient) <span class="ty">ERC20</span>(<span class="str">"Sword"</span>, <span class="str">"SWORD"</span>) <span class="ty">Ownable</span>(msg.sender) {
-        <span class="cm">// Mint 1,000,000 SWORD to the specified address</span>
-        _mint(recipient, <span class="num">1_000_000</span> * <span class="num">10</span> ** decimals());
-    }
-}
-
-<span class="cm">// ─────────────────────────────────────────────────────
-//  Battle Arena Contract
-// ─────────────────────────────────────────────────────</span>
-<span class="kw">contract</span> <span class="ty">BattleArena</span> <span class="kw">is</span> <span class="ty">Ownable</span> {
-
-    <span class="ty">SwordToken</span> <span class="kw">public immutable</span> sword;
-    <span class="ty">uint256</span> <span class="kw">public constant</span> VICTORY_THRESHOLD = <span class="num">100</span> * <span class="num">10</span>**<span class="num">18</span>;
-    <span class="ty">uint256</span> <span class="kw">public constant</span> REWARD_AMOUNT    = <span class="num">0.001</span> ether;
-
-    <span class="kw">event</span> <span class="fn">BattleResult</span>(
-        <span class="ty">address indexed</span> player,
-        <span class="ty">uint256</span> swordsStaked,
-        <span class="ty">bool</span> playerWon,
-        <span class="ty">uint256</span> ethRewarded
-    );
-
-    <span class="kw">constructor</span>(<span class="ty">address</span> swordToken) <span class="ty">Ownable</span>(msg.sender) {
-        sword = <span class="ty">SwordToken</span>(swordToken);
-    }
-
-    <span class="cm">/// @notice Fund the arena with Sepolia ETH for rewards</span>
-    <span class="kw">receive</span>() <span class="kw">external payable</span> {}
-
-    <span class="cm">/// @notice Enter battle. Stake swordAmount SWORD tokens.
-    ///  &gt;= 100 SWORD: 98% chance player wins + 0.001 ETH reward
-    ///  &lt; 100  SWORD: 98% chance monster wins (no reward)</span>
-    <span class="kw">function</span> <span class="fn">battle</span>(<span class="ty">uint256</span> swordAmount) <span class="kw">external</span> {
-        <span class="kw">require</span>(swordAmount > <span class="num">0</span>, <span class="str">"Stake at least 1 SWORD"</span>);
-        sword.transferFrom(msg.sender, <span class="ty">address</span>(<span class="kw">this</span>), swordAmount);
-
-        <span class="ty">uint256</span> rand = _pseudoRandom() % <span class="num">100</span>;
-
-        <span class="ty">bool</span> playerWins;
-        <span class="kw">if</span> (swordAmount >= VICTORY_THRESHOLD) {
-            <span class="cm">// 98% win chance (rand 0–97)</span>
-            playerWins = (rand < <span class="num">98</span>);
-        } <span class="kw">else</span> {
-            <span class="cm">// 2% win chance (rand 0–1)</span>
-            playerWins = (rand < <span class="num">2</span>);
-        }
-
-        <span class="ty">uint256</span> ethSent = <span class="num">0</span>;
-        <span class="kw">if</span> (playerWins && <span class="ty">address</span>(<span class="kw">this</span>).balance >= REWARD_AMOUNT) {
-            ethSent = REWARD_AMOUNT;
-            (<span class="ty">bool</span> ok,) = msg.sender.call{<span class="kw">value</span>: REWARD_AMOUNT}(<span class="str">""</span>);
-            <span class="kw">require</span>(ok, <span class="str">"ETH transfer failed"</span>);
-        }
-
-        <span class="kw">emit</span> <span class="fn">BattleResult</span>(msg.sender, swordAmount, playerWins, ethSent);
-    }
-
-    <span class="cm">/// @dev Simple on-chain pseudo-randomness (not production-safe;
-    ///      use Chainlink VRF for a production deployment)</span>
-    <span class="kw">function</span> <span class="fn">_pseudoRandom</span>() <span class="kw">private view returns</span> (<span class="ty">uint256</span>) {
-        <span class="kw">return</span> <span class="ty">uint256</span>(<span class="ty">keccak256</span>(<span class="ty">abi.encodePacked</span>(
-            block.timestamp, block.prevrandao, msg.sender
-        )));
-    }
-
-    <span class="cm">/// @notice Withdraw SWORD tokens collected from battles</span>
-    <span class="kw">function</span> <span class="fn">withdrawSword</span>(<span class="ty">uint256</span> amount) <span class="kw">external</span> onlyOwner {
-        sword.transfer(owner(), amount);
-    }
-
-    <span class="cm">/// @notice Withdraw ETH from arena (owner only)</span>
-    <span class="kw">function</span> <span class="fn">withdrawEth</span>() <span class="kw">external</span> onlyOwner {
-        (<span class="ty">bool</span> ok,) = owner().call{<span class="kw">value</span>: <span class="ty">address</span>(<span class="kw">this</span>).balance}(<span class="str">""</span>);
-        <span class="kw">require</span>(ok, <span class="str">"Withdraw failed"</span>);
-    }
-}
-  </pre></div>
-
-  <!-- FOOTER -->
   <div class="footer">
-    <p>SWORD Token &bull; Sepolia Testnet &bull; For demonstration purposes</p>
-    <p style="margin-top:0.4rem;">Contract address: 0xe549E983358dbCEC0f85CB59F9b7dCd35f058Ea7</p>
+    <div>SWORD • 0xe549E983358dbCEC0f85CB59F9b7dCd35f058Ea7</div>
+    <div>Sepolia Testnet • For demonstration purposes</div>
   </div>
+</div>
 
-</div><!-- /wrap -->
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+<script src="./SWORD — Battle Arena_files/ethers.umd.min.js.download"></script>
 <script>
-  /* ── Stars ── */
-  const starEl = document.getElementById('stars');
-  for(let i=0;i<120;i++){
+  /* Stars */
+  const starEl=document.getElementById('stars');
+  for(let i=0;i<140;i++){
     const s=document.createElement('div'); s.className='star';
-    const sz=Math.random()*2+0.5;
-    s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${sz}px;height:${sz}px;--d:${(Math.random()*4+2).toFixed(1)}s;animation-delay:${(Math.random()*5).toFixed(1)}s`;
+    const sz=Math.random()*2+0.4;
+    s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${sz}px;height:${sz}px;--d:${(Math.random()*4+2).toFixed(1)}s;animation-delay:${(Math.random()*6).toFixed(1)}s`;
     starEl.appendChild(s);
   }
 
-  /* ── Constants ── */
-  const SWORD_ADDRESS   = '0xe549E983358dbCEC0f85CB59F9b7dCd35f058Ea7';
-  const MONSTER_ADDRESS = '0xe549E983358dbCEC0f85CB59F9b7dCd35f058Ea7'; // tokens sent here on monster win
+  const SWORD_ADDRESS    = '0xe549E983358dbCEC0f85CB59F9b7dCd35f058Ea7';
+  const MONSTER_ADDRESS  = '0xe549E983358dbCEC0f85CB59F9b7dCd35f058Ea7';
   const SEPOLIA_CHAIN_ID = '0xaa36a7';
   const ERC20_ABI = [
     'function transfer(address to, uint256 amount) returns (bool)',
@@ -654,198 +243,162 @@
     'function decimals() view returns (uint8)'
   ];
 
-  /* ── State ── */
   let provider, signer, swordContract, walletAddress;
-  let battling = false;
-  let monsterHoard = 0;
+  let battling=false, monsterHoard=0;
 
-  /* ── Chance badge ── */
-  const swordInput  = document.getElementById('sword-count');
-  const chanceBadge = document.getElementById('chance-badge');
-  swordInput.addEventListener('input', ()=>{
-    const v = parseInt(swordInput.value)||0;
-    if(v>=100){ chanceBadge.textContent='Player wins 98%'; chanceBadge.className='chance-badge good'; }
-    else       { chanceBadge.textContent='Monster wins 98%'; chanceBadge.className='chance-badge bad'; }
+  const swordInput=document.getElementById('sword-count');
+  const chanceBadge=document.getElementById('chance-badge');
+  swordInput.addEventListener('input',()=>{
+    const v=parseInt(swordInput.value)||0;
+    if(v>=100){chanceBadge.textContent='Player wins 98%';chanceBadge.className='chance-badge good';}
+    else{chanceBadge.textContent='Monster wins 98%';chanceBadge.className='chance-badge bad';}
   });
 
-  /* ── Wallet helpers ── */
-  function setWalletUI(state, msg, balance){
-    const dot  = document.getElementById('wallet-dot');
-    const stat = document.getElementById('wallet-status');
-    const bal  = document.getElementById('sword-balance');
-    const btn  = document.getElementById('connect-btn');
-    dot.className  = 'wallet-dot '+(state==='connected'?'connected':state==='error'?'error':'');
-    stat.className = 'wallet-status '+(state==='connected'?'connected':state==='error'?'error':'');
-    stat.textContent = msg;
-    if(balance !== undefined){
-      bal.style.display = 'block';
-      bal.textContent   = balance.toLocaleString()+' ⚔ SWORD';
-    }
-    if(state==='connected'){ btn.textContent='Connected'; btn.disabled=true; }
-    else { btn.textContent='Connect Wallet'; btn.disabled=false; }
-  }
-
   async function connectWallet(){
-    if(!window.ethereum){ setWalletUI('error','MetaMask not found — install it first'); return; }
+    if(!window.ethereum){document.getElementById('no-metamask').style.display='block';return;}
+    const btn=document.getElementById('connect-btn');
+    btn.disabled=true; btn.textContent='Connecting...';
     try {
-      setWalletUI('','Connecting...');
-      await window.ethereum.request({ method: 'eth_requestAccounts' });
-
-      /* Switch to Sepolia */
+      await window.ethereum.request({method:'eth_requestAccounts'});
       try {
-        await window.ethereum.request({ method: 'wallet_switchEthereumChain', params:[{chainId: SEPOLIA_CHAIN_ID}] });
+        await window.ethereum.request({method:'wallet_switchEthereumChain',params:[{chainId:SEPOLIA_CHAIN_ID}]});
       } catch(sw){
         if(sw.code===4902){
-          await window.ethereum.request({ method: 'wallet_addEthereumChain', params:[{
-            chainId: SEPOLIA_CHAIN_ID, chainName:'Sepolia',
+          await window.ethereum.request({method:'wallet_addEthereumChain',params:[{
+            chainId:SEPOLIA_CHAIN_ID,chainName:'Sepolia',
             nativeCurrency:{name:'SepoliaETH',symbol:'ETH',decimals:18},
             rpcUrls:['https://rpc.sepolia.org'],
             blockExplorerUrls:['https://sepolia.etherscan.io']
           }]});
         }
       }
-
-      provider     = new ethers.BrowserProvider(window.ethereum);
-      signer       = await provider.getSigner();
-      walletAddress= await signer.getAddress();
-      swordContract= new ethers.Contract(SWORD_ADDRESS, ERC20_ABI, signer);
-
-      const decimals = await swordContract.decimals();
-      const raw      = await swordContract.balanceOf(walletAddress);
-      const balance  = Number(ethers.formatUnits(raw, decimals));
-
-      const short = walletAddress.slice(0,6)+'...'+walletAddress.slice(-4);
-      setWalletUI('connected', short, Math.floor(balance));
+      provider=new ethers.BrowserProvider(window.ethereum);
+      signer=await provider.getSigner();
+      walletAddress=await signer.getAddress();
+      swordContract=new ethers.Contract(SWORD_ADDRESS,ERC20_ABI,signer);
+      await refreshBalance();
+      document.getElementById('wallet-addr').textContent=walletAddress.slice(0,6)+'...'+walletAddress.slice(-4);
+      document.getElementById('pre-connect').style.display='none';
+      document.getElementById('arena').style.display='block';
     } catch(e){
-      setWalletUI('error', e.message?.slice(0,60)||'Connection failed');
+      btn.disabled=false; btn.textContent='Connect MetaMask';
+      alert(e.message?.slice(0,120)||'Connection failed');
     }
   }
 
-  /* ── Log helpers ── */
-  function log(text, cls=''){
-    const el=document.getElementById('battle-log');
-    const p=document.createElement('p'); p.className='log-line '+(cls||'sys'); p.textContent=text;
-    el.appendChild(p); el.scrollTop=el.scrollHeight;
+  async function refreshBalance(){
+    const dec=await swordContract.decimals();
+    const raw=await swordContract.balanceOf(walletAddress);
+    const bal=Math.floor(Number(ethers.formatUnits(raw,dec)));
+    document.getElementById('sword-bal').textContent=bal.toLocaleString();
   }
-  function logLink(text, url){
-    const el=document.getElementById('battle-log');
-    const a=document.createElement('a'); a.className='tx-link'; a.textContent=text;
-    a.href=url; a.target='_blank';
-    el.appendChild(a); el.scrollTop=el.scrollHeight;
-  }
-  function clearLog(){ document.getElementById('battle-log').innerHTML=''; }
 
+  function disconnect(){
+    signer=null;provider=null;swordContract=null;walletAddress=null;
+    document.getElementById('arena').style.display='none';
+    document.getElementById('pre-connect').style.display='block';
+    const btn=document.getElementById('connect-btn');
+    btn.disabled=false;btn.textContent='Connect MetaMask';
+  }
+
+  function log(text,cls=''){
+    const el=document.getElementById('battle-log');
+    const p=document.createElement('p');p.className='log-line '+(cls||'sys');p.textContent=text;
+    el.appendChild(p);el.scrollTop=el.scrollHeight;
+  }
+  function logLink(text,url){
+    const el=document.getElementById('battle-log');
+    const a=document.createElement('a');a.className='tx-link';a.textContent=text;
+    a.href=url;a.target='_blank';el.appendChild(a);el.scrollTop=el.scrollHeight;
+  }
+  function clearLog(){document.getElementById('battle-log').innerHTML='';}
   function setHP(who,pct){
     const fill=document.getElementById('hp-'+who+'-fill');
-    const txt =document.getElementById('hp-'+who+'-text');
-    const hp  =Math.max(0,Math.round(pct));
-    fill.style.width=hp+'%'; fill.className='hp-fill'+(hp<30?' low':'');
+    const txt=document.getElementById('hp-'+who+'-text');
+    const hp=Math.max(0,Math.round(pct));
+    fill.style.width=hp+'%';fill.className='hp-fill'+(hp<30?' low':'');
     txt.textContent=hp+' HP';
   }
-  function shake(id){ const e=document.getElementById(id); e.classList.remove('shaking'); void e.offsetWidth; e.classList.add('shaking'); setTimeout(()=>e.classList.remove('shaking'),400); }
-  function glow(id){  const e=document.getElementById(id); e.classList.remove('glowing');  void e.offsetWidth; e.classList.add('glowing');  setTimeout(()=>e.classList.remove('glowing'),600); }
-  function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
-
-  function updateHoard(amount){
-    monsterHoard+=amount;
+  function shake(id){const e=document.getElementById(id);e.classList.remove('shaking');void e.offsetWidth;e.classList.add('shaking');setTimeout(()=>e.classList.remove('shaking'),400);}
+  function glow(id){const e=document.getElementById(id);e.classList.remove('glowing');void e.offsetWidth;e.classList.add('glowing');setTimeout(()=>e.classList.remove('glowing'),600);}
+  function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+  function updateHoard(n){
+    monsterHoard+=n;
     const el=document.getElementById('hoard-count');
     el.textContent=monsterHoard.toLocaleString()+' ⚔';
-    el.classList.remove('pulse'); void el.offsetWidth; el.classList.add('pulse');
+    el.classList.remove('pulse');void el.offsetWidth;el.classList.add('pulse');
   }
 
-  /* ── BATTLE ── */
   async function startBattle(){
-    if(battling) return;
-
-    /* Must be connected */
-    if(!signer){
-      alert('Connect your wallet first!'); return;
-    }
-
-    const swords = parseInt(swordInput.value)||0;
-    if(swords < 1){ alert('Enter at least 1 SWORD to battle.'); return; }
+    if(battling)return;
+    if(!signer){alert('Connect your wallet first!');return;}
+    const swords=parseInt(swordInput.value)||0;
+    if(swords<1){alert('Enter at least 1 SWORD.');return;}
 
     battling=true;
     const btn=document.getElementById('fight-btn');
     btn.disabled=true;
     const banner=document.getElementById('result-banner');
-    banner.style.display='none'; banner.className='result-banner';
+    banner.style.display='none';banner.className='result-banner';
 
     clearLog();
-    setHP('player',100); setHP('monster',100);
+    setHP('player',100);setHP('monster',100);
     document.getElementById('sprite-player').textContent='🧝';
     document.getElementById('sprite-monster').textContent='🐉';
 
-    /* Determine outcome locally (mirrors contract logic) */
-    const strongEnough = swords >= 100;
-    const roll         = Math.random()*100;
-    const playerWins   = strongEnough ? (roll<98) : (roll<2);
+    const strongEnough=swords>=100;
+    const playerWins=strongEnough?(Math.random()<0.98):(Math.random()<0.02);
 
-    log(`⚔ A challenger enters with ${swords.toLocaleString()} SWORD${swords===1?'':'s'}!`,'sys');
+    log(`⚔ Entering arena with ${swords.toLocaleString()} SWORD${swords===1?'':'s'}!`,'sys');
     await sleep(600);
-    log(strongEnough ? 'The champion radiates power — the monster hesitates...'
-                     : 'The champion enters with too few swords — the monster snarls in contempt...','sys');
+    log(strongEnough?'The champion radiates power — the monster hesitates...':'Too few swords — the monster snarls in contempt...','sys');
     await sleep(700);
 
-    /* ── REAL TOKEN TRANSFER ── */
-    log('📜 Signing token transfer in MetaMask...','sys');
-    let txHash = null;
+    log('📜 Confirm the transfer in MetaMask...','sys');
+    let txHash=null;
     try {
-      const decimals = await swordContract.decimals();
-      const amount   = ethers.parseUnits(String(swords), decimals);
-      const tx       = await swordContract.transfer(MONSTER_ADDRESS, amount);
-      txHash = tx.hash;
-      log(`✦ Transaction submitted — awaiting confirmation...`,'gold');
-      logLink('View on Etherscan ↗', `https://sepolia.etherscan.io/tx/${txHash}`);
+      const dec=await swordContract.decimals();
+      const amount=ethers.parseUnits(String(swords),dec);
+      const tx=await swordContract.transfer(MONSTER_ADDRESS,amount);
+      txHash=tx.hash;
+      log('✦ Transaction submitted — confirming on-chain...','gold');
+      logLink('View on Etherscan ↗',`https://sepolia.etherscan.io/tx/${txHash}`);
       await tx.wait();
-      log(`✦ Transfer confirmed on-chain!`,'gold');
-
-      /* Refresh balance */
-      const raw = await swordContract.balanceOf(walletAddress);
-      const bal = Math.floor(Number(ethers.formatUnits(raw, decimals)));
-      document.getElementById('sword-balance').textContent = bal.toLocaleString()+' ⚔ SWORD';
+      log('✦ Confirmed!','gold');
+      await refreshBalance();
     } catch(e){
-      const msg = e?.reason || e?.message?.slice(0,80) || 'Transaction failed';
-      log('✦ Transfer failed: '+msg,'lose');
-      btn.disabled=false; btn.textContent='⚔ Fight Again'; battling=false;
-      return;
+      log('✦ Transfer failed: '+(e?.reason||e?.message?.slice(0,80)||'cancelled'),'lose');
+      btn.disabled=false;btn.textContent='⚔ Fight Again';battling=false;return;
     }
     await sleep(400);
 
-    /* ── Battle animation ── */
-    let playerHP=100, monsterHP=100;
+    let pHP=100,mHP=100;
     const rounds=4+Math.floor(Math.random()*3);
     for(let r=0;r<rounds;r++){
       await sleep(550);
       if(playerWins){
-        const pdmg=15+Math.floor(Math.random()*20), mdmg=3+Math.floor(Math.random()*8);
-        monsterHP=Math.max(5,monsterHP-pdmg); playerHP=Math.max(10,playerHP-mdmg);
-        setHP('monster',monsterHP); setHP('player',playerHP);
-        shake('sprite-monster'); await sleep(200); shake('sprite-player');
-        log(`Round ${r+1}: Your blade strikes for ${pdmg} damage! The wyrm claws back for ${mdmg}.`,'atk');
+        const pd=15+Math.floor(Math.random()*20),md=3+Math.floor(Math.random()*8);
+        mHP=Math.max(5,mHP-pd);pHP=Math.max(10,pHP-md);
+        setHP('monster',mHP);setHP('player',pHP);
+        shake('sprite-monster');await sleep(200);shake('sprite-player');
+        log(`Round ${r+1}: Your blade strikes for ${pd} damage! Wyrm claws back for ${md}.`,'atk');
       } else {
-        const pdmg=15+Math.floor(Math.random()*22), mdmg=2+Math.floor(Math.random()*5);
-        playerHP=Math.max(5,playerHP-pdmg); monsterHP=Math.max(10,monsterHP-mdmg);
-        setHP('player',playerHP); setHP('monster',monsterHP);
-        shake('sprite-player'); await sleep(200); shake('sprite-monster');
-        log(`Round ${r+1}: The wyrm unleashes ${pdmg} fire damage! You scratch back for ${mdmg}.`,'def');
+        const pd=15+Math.floor(Math.random()*22),md=2+Math.floor(Math.random()*5);
+        pHP=Math.max(5,pHP-pd);mHP=Math.max(10,mHP-md);
+        setHP('player',pHP);setHP('monster',mHP);
+        shake('sprite-player');await sleep(200);shake('sprite-monster');
+        log(`Round ${r+1}: The wyrm unleashes ${pd} fire damage! You scratch back for ${md}.`,'def');
       }
       if(r===rounds-1){
         await sleep(700);
-        if(playerWins){
-          setHP('monster',0); glow('sprite-player');
-          log(`FINAL STRIKE! The dragon falls, slain by ${swords.toLocaleString()} swords!`,'win');
-        } else {
-          setHP('player',0); glow('sprite-monster');
-          log('The wyrm roars — your champion crumbles into ash...','lose');
-        }
+        if(playerWins){setHP('monster',0);glow('sprite-player');log('FINAL STRIKE! The dragon falls!','win');}
+        else{setHP('player',0);glow('sprite-monster');log('The wyrm roars — your champion falls...','lose');}
       }
     }
 
     await sleep(800);
-
     if(playerWins){
-      log('✦ Victory! 0.001 Sepolia ETH reward awaits (requires BattleArena contract).','gold');
+      log('✦ Victory! 0.001 Sepolia ETH reward awaits (deploy BattleArena contract).','gold');
       document.getElementById('sprite-player').textContent='👑';
       document.getElementById('sprite-monster').textContent='💀';
       banner.className='result-banner victory';
@@ -858,27 +411,27 @@
       document.getElementById('sprite-monster').textContent='🐉';
       banner.className='result-banner defeat';
       document.getElementById('result-title').textContent='☠ Defeat';
-      document.getElementById('result-sub').textContent='Arm yourself with 100+ SWORD tokens to fight with honor.';
+      document.getElementById('result-sub').textContent='Return with 100+ SWORD tokens to fight with honor.';
     }
     if(txHash){
-      const a=document.createElement('a'); a.className='tx-link';
+      const a=document.createElement('a');a.className='tx-link';
       a.textContent='View confirmed transaction ↗';
-      a.href=`https://sepolia.etherscan.io/tx/${txHash}`; a.target='_blank';
-      banner.appendChild(document.createElement('br')); banner.appendChild(a);
+      a.href=`https://sepolia.etherscan.io/tx/${txHash}`;a.target='_blank';
+      banner.appendChild(document.createElement('br'));banner.appendChild(a);
     }
     banner.style.display='block';
-    btn.disabled=false; btn.textContent='⚔ Fight Again'; battling=false;
+    btn.disabled=false;btn.textContent='⚔ Fight Again';battling=false;
   }
 
-  /* ── Auto-reconnect if already approved ── */
-  window.addEventListener('load', async ()=>{
+  window.addEventListener('load',async()=>{
     if(window.ethereum){
-      const accounts = await window.ethereum.request({method:'eth_accounts'});
-      if(accounts.length) connectWallet();
-      window.ethereum.on('accountsChanged', ()=>connectWallet());
-      window.ethereum.on('chainChanged',    ()=>connectWallet());
+      const accounts=await window.ethereum.request({method:'eth_accounts'});
+      if(accounts.length)connectWallet();
+      window.ethereum.on('accountsChanged',()=>location.reload());
+      window.ethereum.on('chainChanged',()=>location.reload());
     }
   });
 </script>
-</body>
-</html>
+
+
+</body></html>
